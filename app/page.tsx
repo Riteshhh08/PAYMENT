@@ -11,7 +11,7 @@ export default function Home() {
           Souce code available at&nbsp;
           <Link
             className="hover:underline"
-            href="https://github.com/PremPrakashCodes/payment-gateways"
+            href="https://github.com/Riteshhh08/PAYMENT"
             target="_blank"
             rel="noopener noreferrer"
           >
