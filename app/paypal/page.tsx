@@ -1,13 +1,14 @@
 "use client";
+import React, { useTransition } from "react";
 import { createPayment } from "@/actions/paypal";
 import products from "@/data/products.json";
 import Image from "next/image";
-import { useTransition } from "react";
 import { toast } from "react-toastify";
 
 export default function Paypal() {
   const [loading, startTransition] = useTransition();
-  const product = products[0];
+  const [selectedId, setSelectedId] = React.useState(products[0]?.id ?? 1);
+  const product = products.find((p) => p.id === selectedId) || products[0];
 
   function handleBuy() {
     startTransition(async () => {
@@ -24,14 +25,21 @@ export default function Paypal() {
   return (
     <div className="h-screen w-full flex justify-center items-center">
       <div className="flex w-full max-w-xs flex-col overflow-hidden rounded-lg  bg-white dark:bg-gray-950 shadow-md">
-        <div className="relative m-2 flex h-60 overflow-hidden rounded-xl">
-          <Image
-            height={500}
-            width={500}
-            className="object-cover"
-            src={product.image}
-            alt="product image"
-          />
+        <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Choose product</label>
+        <select
+          value={selectedId}
+          onChange={(e) => setSelectedId(Number(e.target.value))}
+          className="mb-4 w-full rounded border px-3 py-2"
+        >
+          {products.map((p) => (
+            <option key={p.id} value={p.id}>
+              {p.name} — ₹{p.price.toLocaleString("en-IN")}
+            </option>
+          ))}
+        </select>
+
+        <div className="relative m-2 w-full overflow-hidden rounded-xl bg-white" style={{ paddingTop: "75%" }}>
+          <Image src={product.image} alt={product.name} fill className="object-contain" />
           <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
             {product.discount}% OFF
           </span>
@@ -45,10 +53,10 @@ export default function Paypal() {
           <div className="mt-2 mb-5 flex items-center justify-between">
             <p>
               <span className="text-3xl font-bold text-slate-900 dark:text-gray-200">
-                ${(product.price - product.price * (product.discount / 100)).toFixed(2)}
+                ₹{(product.price - product.price * (product.discount / 100)).toFixed(2)}
               </span>
               <span className="text-sm text-slate-900 dark:text-gray-200 line-through">
-                ${product.price.toFixed(2)}
+                ₹{product.price.toFixed(2)}
               </span>
             </p>
           </div>

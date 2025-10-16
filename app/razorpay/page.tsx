@@ -79,18 +79,12 @@ export default function Razorpay() {
             ))}
           </select>
 
-          <div className="relative m-2 flex h-72 items-center justify-center overflow-hidden rounded-xl bg-white">
-            <Image
-              height={600}
-              width={800}
-              className="object-contain max-h-full"
-              src={product.image}
-              alt={product.name}
-            />
-          <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
-            {product.discount}% OFF
-          </span>
-        </div>
+          <div className="relative m-2 w-full overflow-hidden rounded-xl bg-white" style={{ paddingTop: "75%" }}>
+            <Image src={product.image} alt={product.name} fill className="object-contain" />
+            <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
+              {product.discount}% OFF
+            </span>
+          </div>
         <div className="mt-4 px-5 pb-5">
           <a href="#">
             <h5 className="text-xl tracking-tight text-slate-900 dark:text-gray-200">
