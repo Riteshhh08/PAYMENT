@@ -1,7 +1,7 @@
 "use client";
+import React, { useTransition } from "react";
 import Image from "next/image";
 import products from "@/data/products.json";
-import { useTransition } from "react";
 import { createOrders, verifyPayment } from "@/actions/razorpay";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
@@ -9,7 +9,8 @@ import { useRouter } from "next/navigation";
 export default function Razorpay() {
   const [loading, startTransition] = useTransition();
   const router = useRouter();
-  const product = products[0];
+  const [selectedId, setSelectedId] = React.useState(products[0]?.id ?? 1);
+  const product = products.find((p) => p.id === selectedId) || products[0];
 
   function handleBuy() {
     startTransition(async () => {
@@ -18,7 +19,7 @@ export default function Razorpay() {
       script.async = true;
 
       script.onload = async () => {
-        const result = await createOrders({ productId: product.id, quantity: 1 });
+  const result = await createOrders({ productId: product.id, quantity: 1 });
 
         if (result.error) {
           alert("Error creating orders");
@@ -28,7 +29,7 @@ export default function Razorpay() {
         const options = {
           key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
           amount: (product.price - product.price * (product.discount / 100)) * 100,
-          currency: "USD",
+          currency: "INR",
           name: "Payment Gateways Demo",
           image: `${process.env.NEXT_PUBLIC_BASE_URL}${product.image}`,
           order_id: result.orderId,
@@ -63,15 +64,29 @@ export default function Razorpay() {
 
   return (
     <div className="h-screen w-full flex justify-center items-center">
-      <div className="flex w-full max-w-xs flex-col overflow-hidden rounded-lg  bg-white dark:bg-gray-950 shadow-md">
-        <div className="relative m-2 flex h-60 overflow-hidden rounded-xl">
-          <Image
-            height={500}
-            width={500}
-            className="object-cover"
-            src={product.image}
-            alt="product image"
-          />
+      <div className="flex w-full max-w-md flex-col overflow-hidden rounded-lg  bg-white dark:bg-gray-950 shadow-md">
+        <div className="px-5 pt-5">
+          <label className="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Choose product</label>
+          <select
+            value={selectedId}
+            onChange={(e) => setSelectedId(Number(e.target.value))}
+            className="mb-4 w-full rounded border px-3 py-2"
+          >
+            {products.map((p) => (
+              <option key={p.id} value={p.id}>
+                {p.name} — ₹{p.price.toLocaleString("en-IN")}
+              </option>
+            ))}
+          </select>
+
+          <div className="relative m-2 flex h-72 items-center justify-center overflow-hidden rounded-xl bg-white">
+            <Image
+              height={600}
+              width={800}
+              className="object-contain max-h-full"
+              src={product.image}
+              alt={product.name}
+            />
           <span className="absolute top-0 left-0 m-2 rounded-full bg-black px-2 text-center text-sm font-medium text-white">
             {product.discount}% OFF
           </span>
@@ -102,5 +117,6 @@ export default function Razorpay() {
         </div>
       </div>
     </div>
+  </div>
   );
 }

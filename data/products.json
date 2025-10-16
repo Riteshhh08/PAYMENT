@@ -1,9 +1,58 @@
 [
   {
     "id": 1,
-    "name": "Red Nike sneaker",
-    "price": 500,
-    "discount": 30,
-    "image": "/images/product.png"
+    "name": "Sony ILME-FX3 (Cinema Line)",
+    "price": 129000,
+    "discount": 10,
+    "image": "/images/product2.png"
+  },
+  {
+    "id": 2,
+    "name": "Sony Alpha 7 IV (A7 IV)",
+    "price": 199900,
+    "discount": 5,
+    "image": "/images/product3.png"
+  },
+  {
+    "id": 3,
+    "name": "Sony Alpha 7R IV (A7R IV)",
+    "price": 349000,
+    "discount": 8,
+    "image": "/images/product4.png"
+  },
+  {
+    "id": 4,
+    "name": "Sony FX30 (Cinema Line)",
+    "price": 459000,
+    "discount": 12,
+    "image": "/images/product5.png"
+  },
+  {
+    "id": 5,
+    "name": "Sony Alpha 1 (A1)",
+    "price": 599000,
+    "discount": 7,
+    "image": "/images/product6.png"
+  },
+  {
+    "id": 6,
+    "name": "Sony ZV-E10 (Red Special Edition)",
+    "price": 129900,
+    "discount": 15,
+    "image": "/images/prodcut6.png"
+  },
+  {
+    "id": 7,
+    "name": "Sony Alpha 9 II (A9 II)",
+    "price": 799999,
+    "discount": 6,
+    "image": "/images/product 7.png"
+  },
+  {
+    "id": 8,
+    "name": "Sony Alpha 7S III (A7S III)",
+    "price": 450000,
+    "discount": 9,
+    "image": "/images/product8.png"
   }
 ]
